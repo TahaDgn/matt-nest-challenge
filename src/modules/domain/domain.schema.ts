@@ -4,7 +4,6 @@ import {
     SchemaFactory,
 } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import * as fuzzySearching from 'mongoose-fuzzy-searching';
 
 
 @Schema({
@@ -14,7 +13,7 @@ import * as fuzzySearching from 'mongoose-fuzzy-searching';
     },
 })
 export class Domain extends Document {
-    @Prop({ type: 'string', required: true, unique: true })
+    @Prop({ type: 'string', required: true })
     domainName: string;
 
     @Prop({ type: 'string', required: true, index: true })
@@ -29,8 +28,6 @@ export type DomainDocument = Domain & Document;
 const DomainSchema = SchemaFactory.createForClass(Domain);
 
 // Schema ops.
-DomainSchema.index({ domainName: 'text' });
-
-DomainSchema.plugin(fuzzySearching, { fields: 'domainName' });
+DomainSchema.index({ domainName: 'text' }, { name: 'domainTextIndex', unique: true });
 
 export { DomainSchema };
