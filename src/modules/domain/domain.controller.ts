@@ -7,6 +7,7 @@ import {
     Headers,
     Param,
     Query,
+    HttpCode,
 } from '@nestjs/common';
 
 import { DomainDocument } from './domain.schema';
@@ -46,6 +47,7 @@ export default class DomainController {
         return this.domainService.getByOwner(paginationHeader, ownerId);
     }
 
+    @HttpCode(200)
     @Post('/search')
     public async getBySearch(
         @Headers('x-pagination') paginationHeader: string,

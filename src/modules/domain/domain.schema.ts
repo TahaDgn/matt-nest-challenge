@@ -13,7 +13,7 @@ import { Document } from 'mongoose';
     },
 })
 export class Domain extends Document {
-    @Prop({ type: 'string', required: true })
+    @Prop({ type: 'string', required: true, unique: true })
     domainName: string;
 
     @Prop({ type: 'string', required: true, index: true })
@@ -28,6 +28,6 @@ export type DomainDocument = Domain & Document;
 const DomainSchema = SchemaFactory.createForClass(Domain);
 
 // Schema ops.
-DomainSchema.index({ domainName: 'text' }, { name: 'domainTextIndex', unique: true });
+DomainSchema.index({ domainName: 'text' });
 
 export { DomainSchema };
